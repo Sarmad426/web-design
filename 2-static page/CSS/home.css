@@ -1,0 +1,214 @@
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+customButton,
+.custom__button,
+button,
+.primary__button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+customInput,
+.form__input {
+  border: none;
+  outline: 1px solid gray;
+  border-radius: 3px;
+}
+customInput:focus,
+.form__input:focus {
+  border: none;
+  outline: 1.3px solid rgb(90, 90, 220);
+}
+
+.link__styles {
+  text-decoration: none;
+  color: rgb(120, 120, 120);
+  transition: 0.3s ease-in;
+}
+.link__styles:hover {
+  color: #333;
+}
+
+.bold {
+  font-weight: 600;
+  color: #333;
+}
+
+.block {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.primary__button {
+  background-color: rgb(90, 90, 220);
+  color: #fefefe;
+}
+.primary__button:hover {
+  background-color: rgb(100, 100, 220);
+}
+
+p {
+  color: rgb(120, 120, 120);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px 40px;
+}
+
+.form__input {
+  margin: 20px auto;
+  padding: 12px 12px;
+}
+
+.logo__styles {
+  display: flex;
+  text-decoration: none;
+}
+.logo__styles .logo__text {
+  margin-left: 4px;
+  margin-top: -6px;
+  color: rgb(90, 90, 220);
+}
+.logo__styles .logo__text .logo__heading {
+  margin-bottom: -5px;
+  font-weight: 600;
+}
+.logo__styles .logo__text .logo__desc {
+  margin-left: 3px;
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: inherit;
+}
+
+.linear__btn1 {
+  background-image: linear-gradient(to left, purple, rgb(60, 99, 225));
+  color: #fefefe;
+}
+.linear__btn1:hover {
+  background-image: linear-gradient(
+    to left,
+    rgb(198, 29, 198),
+    rgb(28, 69, 204)
+  );
+}
+
+.linear__btn2 {
+  background-image: linear-gradient(
+    to left,
+    rgb(198, 29, 198),
+    rgb(28, 69, 204)
+  );
+  color: #fefefe;
+}
+.linear__btn2:hover {
+  background-image: linear-gradient(to left, purple, rgb(60, 99, 225));
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+nav {
+  font-family: "system-ui";
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px;
+  margin-top: 0px;
+  background-color: rgb(0, 145, 255);
+  color: white;
+}
+nav img {
+  width: 60px;
+  border-radius: 50%;
+  margin-left: 30px;
+}
+nav .nav-menu ul {
+  display: flex;
+  gap: 15px;
+}
+nav .nav-menu ul li {
+  list-style: none;
+  font-size: 20px;
+  margin: 30px;
+  margin-top: 5px;
+}
+nav .nav-menu ul li a {
+  text-decoration: none;
+  transition: 8ms ease;
+  color: white;
+}
+nav .search input {
+  width: 25rem;
+  height: 2rem;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+nav .search input:focus {
+  border: 1px solid orange;
+  outline: none;
+  box-shadow: 0.3px 0.3px 0.3px 0.3px orange;
+}
+nav .profile img {
+  width: 60px;
+  height: 55px;
+  border-radius: 50%;
+  aspect-ratio: inherit;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+@media (max-width: 1200px) {
+  nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  nav .search input {
+    display: none;
+  }
+}
+@media (max-width: 780px) {
+  nav .nav-menu {
+    display: none;
+  }
+}
+
+.products {
+  margin: 50px;
+}
+
+.product-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.product-view img {
+  width: 200px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px 10px;
+}
+.hero img {
+  -o-object-fit: cover;
+  object-fit: cover;
+} /*# sourceMappingURL=home.css.map */
