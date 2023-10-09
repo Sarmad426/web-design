@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../CSS/contact/cotact.css" />
+    <link rel="icon" type="png" href="/assets/logos/logo.png" />
+    <title>Contact Mikky Mall</title>
+  </head>
+  <body>
+    <header>
+      <!-- Navbar -->
+      <nav>
+        <div>
+          <img src="/assets/logos/logo.png" alt="Mikky Mall logo" />
+        </div>
+        <div class="nav-menu">
+          <ul>
+            <li title="Go to Home Page"><a href="home.html">Home</a></li>
+            <li title="Go to About Page"><a href="about.html">About</a></li>
+            <li title="View Products"><a href="products.html">Products</a></li>
+            <li title="View Services"><a href="">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="search">
+          <input type="text" list="cities" />
+          <datalist id="cities">
+            <option value="Lahore" />
+            <option value="Karachi" />
+            <option value="Islamabad" />
+            <option value="Hyderabad" />
+            <option value="Maree" />
+            <option value="Queta" />
+            <option value="Peshawar" />
+          </datalist>
+        </div>
+        <div class="profile">
+          <img src="/assets/images/profile.jpg" alt="Profile Picture" />
+        </div>
+      </nav>
+    </header>
+    <section class="contact__us" id="contact-us">
+      <div>
+        <h3 class="contact__us__heading">Contact US</h3>
+        <p class="contact__us__desc">
+          Submit Your queries and feedback about our services and agents.
+        </p>
+      </div>
+      <form class="contact__us__form">
+        <h3>Enquiry Form</h3>
+        <p>
+          Are you looking for details about a certain property? Ask questions
+          using the form below.
+        </p>
+        <input
+          type="text"
+          name="first"
+          placeholder="First Name"
+          class="form__input"
+          minlength="3"
+          required
+          autocomplete="off"
+        />
+        <input
+          type="text"
+          name="last"
+          placeholder="Last Name"
+          class="form__input"
+          minlength="3"
+          required
+          autocomplete="off"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email id"
+          class="form__input email__input"
+          required
+          autocomplete="off"
+        />
+        <label for="comments" class="bold">Comments or questions</label>
+        <textarea
+          name="comments"
+          id="comments"
+          cols="96"
+          rows="10"
+          class="form__textarea"
+          minlength="50"
+          maxlength="300"
+          required
+        >
+        </textarea>
+        <button class="submit__button" type="submit">Submit</button>
+      </form>
+    </section>
+    <footer>&copy; 2023 Mikky Mall. All rights reserved.</footer>
+  </body>
+</html>
