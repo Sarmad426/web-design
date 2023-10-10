@@ -110,7 +110,8 @@ body {
   cursor: pointer;
 }
 .product-view .product-card img {
-  width: 200px;
+  max-width: 300px;
+  max-height: 250px;
 }
 .product-view .product-card p {
   font-size: 20px;
