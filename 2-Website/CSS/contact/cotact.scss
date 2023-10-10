@@ -1,1 +1,51 @@
 @import "../variables";
+
+.contact__us {
+  background-color: $primaryBg;
+  @include margin(20px, 5px);
+  @include padding(10px, 20px);
+  text-align: center;
+  .contact__us__heading {
+    @include fontStyles(40px, 500, $primaryTextColor);
+  }
+  .contact__us__desc {
+    color: $secondaryTextColor;
+  }
+  .contact__us__form {
+    text-align: start;
+    width: 60%;
+    background-color: $white;
+    @include padding(20px, 20px);
+    border-radius: 10px;
+    margin: auto;
+    .form__input {
+      width: 45%;
+      display: inline-block;
+      margin-right: 4px;
+      padding: 5px;
+    }
+    .email__input {
+      width: 95%;
+    }
+    .form__textarea {
+      @include padding(5px, 7px);
+      border: none;
+      outline: 1px solid $secondaryTextColor;
+      border-radius: 4px;
+      &:focus {
+        border: none;
+        outline: 1px solid $primaryColor;
+      }
+    }
+    .submit__button {
+      margin-top: 20px;
+      margin-left: 35%;
+      width: 25%;
+      background-color: $primaryColor;
+      color: $white;
+      &:hover {
+        background-color: $btnHoverEffect;
+      }
+    }
+  }
+}
