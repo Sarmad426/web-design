@@ -20,27 +20,44 @@
     margin: auto;
     .form__input {
       width: 45%;
+      height: 2rem;
+      border-radius: 5px;
       display: inline-block;
-      margin-right: 4px;
+      margin: 8px 4px;
       padding: 5px;
+      &:focus {
+        outline: none;
+        border: 1.8px solid rgb(0, 145, 255);
+      }
     }
     .email__input {
-      width: 95%;
+      width: 93%;
+      &:focus {
+        outline: none;
+        border: 1.8px solid rgb(0, 145, 255);
+      }
+    }
+    .label-text-area {
+      display: block;
+      margin: 6px 8px;
     }
     .form__textarea {
       @include padding(5px, 7px);
+      width: 93%;
       border: none;
       outline: 1px solid $secondaryTextColor;
       border-radius: 4px;
+      margin: 8px 4px;
       &:focus {
-        border: none;
-        outline: 1px solid $primaryColor;
+        outline: none;
+        border: 1.8px solid rgb(0, 145, 255);
       }
     }
     .submit__button {
       margin-top: 20px;
       margin-left: 35%;
       width: 25%;
+      height: 2.8rem;
       background-color: $primaryColor;
       color: $white;
       &:hover {
@@ -48,4 +65,8 @@
       }
     }
   }
+}
+
+footer {
+  bottom: -150px;
 }
