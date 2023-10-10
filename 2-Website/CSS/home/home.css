@@ -82,6 +82,13 @@ footer {
   width: 100%;
 }
 
+.btn {
+  border: none;
+  padding: 3px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 body {
   margin: 0px;
   padding: 0px;
