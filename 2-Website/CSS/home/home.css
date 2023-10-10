@@ -90,6 +90,11 @@ body {
 .products {
   margin: 50px;
 }
+.products h2 {
+  text-align: center;
+  font-size: 50px;
+  font-family: cursive;
+}
 
 .product-view {
   display: flex;
@@ -98,8 +103,18 @@ body {
   flex-wrap: wrap;
   gap: 15px;
 }
-.product-view img {
+.product-view .product-card {
+  background-color: #eee;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.product-view .product-card img {
   width: 200px;
+}
+.product-view .product-card p {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .hero {
@@ -146,4 +161,8 @@ body {
 }
 .hero .hero-content .btn:hover {
   background-color: #0056b3;
+}
+
+footer {
+  bottom: -100px;
 }/*# sourceMappingURL=home.css.map */

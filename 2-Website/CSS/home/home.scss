@@ -7,6 +7,11 @@ body {
 
 .products {
   margin: 50px;
+  h2 {
+    text-align: center;
+    font-size: 50px;
+    font-family: cursive;
+  }
 }
 
 .product-view {
@@ -15,9 +20,18 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 15px;
-
-  img {
-    width: 200px;
+  .product-card {
+    background-color: #eee;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    img {
+      width: 200px;
+    }
+    p {
+      font-size: 20px;
+      font-weight: 700;
+    }
   }
 }
 
@@ -69,4 +83,7 @@ body {
       }
     }
   }
+}
+footer {
+  bottom: -100px;
 }
