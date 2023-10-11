@@ -8,39 +8,74 @@
     <title>Mikky Mall</title>
   </head>
   <body>
-    <header>
-      <!-- Navbar -->
-      <nav>
-        <div>
-          <img src="/assets/logos/logo.png" alt="Mikky Mall logo" />
+    <main class="container">
+      <header>
+        <!-- Navbar -->
+        <nav>
+          <div>
+            <img src="/assets/logos/logo.png" alt="Mikky Mall logo" />
+          </div>
+          <div class="nav-menu">
+            <ul>
+              <li title="Go to Home Page"><a href="home.html">Home</a></li>
+              <li title="Go to About Page"><a href="about.html">About</a></li>
+              <li title="View Products">
+                <a href="products.html">Products</a>
+              </li>
+              <li title="View Services">
+                <a href="contact-form.html">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div class="search">
+            <input type="text" list="cities" />
+            <datalist id="cities">
+              <option value="Lahore" />
+              <option value="Karachi" />
+              <option value="Islamabad" />
+              <option value="Hyderabad" />
+              <option value="Maree" />
+              <option value="Queta" />
+              <option value="Peshawar" />
+            </datalist>
+          </div>
+          <div class="profile">
+            <img src="/assets/images/profile.jpg" alt="Profile Picture" />
+          </div>
+        </nav>
+      </header>
+      <!-- Products -->
+      <section class="products">
+        <h2>Featured Products</h2>
+        <div class="product-view">
+          <div class="product-card">
+            <img src="/assets/images/f1.jpg" alt="Summer Shirt" />
+            <p>Summer Shirt</p>
+            <span>$18</span>
+          </div>
+          <div class="product-card">
+            <img src="/assets/images/f2.jpg" alt="Summer Shirt" />
+            <p>Summer Shirt</p>
+            <span>$18</span>
+          </div>
+          <div class="product-card">
+            <img src="/assets/images/f3.jpg" alt="Summer Shirt" />
+            <p>Summer Shirt</p>
+            <span>$18</span>
+          </div>
+          <div class="product-card">
+            <img src="/assets/images/f4.jpg" alt="Summer Shirt" />
+            <p>Summer Shirt</p>
+            <span>$18</span>
+          </div>
+          <div class="product-card">
+            <img src="/assets/images/f5.jpg" alt="Summer Shirt" />
+            <p>Summer Shirt</p>
+            <span>$12</span>
+          </div>
         </div>
-        <div class="nav-menu">
-          <ul>
-            <li title="Go to Home Page"><a href="home.html">Home</a></li>
-            <li title="Go to About Page"><a href="about.html">About</a></li>
-            <li title="View Products"><a href="products.html">Products</a></li>
-            <li title="View Services">
-              <a href="contact-form.html">Contact Us</a>
-            </li>
-          </ul>
-        </div>
-        <div class="search">
-          <input type="text" list="cities" />
-          <datalist id="cities">
-            <option value="Lahore" />
-            <option value="Karachi" />
-            <option value="Islamabad" />
-            <option value="Hyderabad" />
-            <option value="Maree" />
-            <option value="Queta" />
-            <option value="Peshawar" />
-          </datalist>
-        </div>
-        <div class="profile">
-          <img src="/assets/images/profile.jpg" alt="Profile Picture" />
-        </div>
-      </nav>
-    </header>
-    <footer>&copy; 2023 Mikky Mall. All rights reserved.</footer>
+      </section>
+      <footer>&copy; 2023 Mikky Mall. All rights reserved.</footer>
+    </main>
   </body>
 </html>
