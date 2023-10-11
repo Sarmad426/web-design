@@ -2,7 +2,6 @@
 
 .contact__us {
   background-color: $primaryBg;
-  @include margin(20px, 5px);
   @include padding(10px, 20px);
   text-align: center;
   .contact__us__heading {
