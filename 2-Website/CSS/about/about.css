@@ -87,6 +87,8 @@ footer {
   padding: 3px 5px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 20px;
+  transition: 0.3s all;
 }
 
 * {
