@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Booking Form</title>
+  </head>
+  <body>
+    <form id="bookingForm">
+      <label for="bookingReference">Booking Reference:</label>
+      <input
+        type="text"
+        id="bookingReference"
+        name="bookingReference"
+        maxlength="10"
+        placeholder="ABC/123456"
+      />
+
+      <div id="error-message" class="error-message"></div>
+
+      <button type="button" onclick="validateForm()">Submit</button>
+    </form>
+
+    <script src="script.js"></script>
+  </body>
+</html>
