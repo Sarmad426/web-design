@@ -1,3 +1,4 @@
 # Web Design and Development
 
-Web Design and Development using **HTML**, **CSS** and **Javascript**.
+Front-end web design and development using **HTML**, **CSS**,
+**SCSS** and **Javascript**.
