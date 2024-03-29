@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solar Calculator</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      /* Set a minimum width for table cells to prevent excessive shrinking */
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        white-space: nowrap; /* Prevent wrapping of text */
+        min-width: 100px; /* Adjust this value as needed */
+      }
+
+      /* Set background color for table header */
+      th {
+        background-color: #f2f2f2;
+      }
+
+      /* Adjust font size for better responsiveness */
+      @media screen and (max-width: 600px) {
+        th,
+        td {
+          font-size: 12px; /* Adjust as needed for smaller screens */
+        }
+        td,
+        input {
+          width: 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Appliance</th>
+          <th>No. of Appliances</th>
+          <th>Total Power (Watts)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 Ton Inverter AC</td>
+          <td>
+            <label for="acCount">Count: </label
+            ><input
+              type="number"
+              id="acCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="acPower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>Iron</td>
+          <td>
+            <label for="ironCount">Count: </label
+            ><input
+              type="number"
+              id="ironCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="ironPower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>Refrigerator</td>
+          <td>
+            <label for="fridgeCount">Count: </label
+            ><input
+              type="number"
+              id="fridgeCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="fridgePower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>Water Pump</td>
+          <td>
+            <label for="pumpCount">Count: </label
+            ><input
+              type="number"
+              id="pumpCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="pumpPower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>Fan</td>
+          <td>
+            <label for="fanCount">Count: </label
+            ><input
+              type="number"
+              id="fanCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="fanPower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>Bulb(LED)</td>
+          <td>
+            <label for="bulbCount">Count: </label
+            ><input
+              type="number"
+              id="bulbCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="bulbPower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>LED/TV</td>
+          <td>
+            <label for="tvCount">Count: </label
+            ><input
+              type="number"
+              id="tvCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="tvPower">0 Watts</span></td>
+        </tr>
+        <tr>
+          <td>Washing Machine</td>
+          <td>
+            <label for="washerCount">Count: </label
+            ><input
+              type="number"
+              id="washerCount"
+              min="0"
+              onchange="calculateTotalPower()"
+            />
+          </td>
+          <td><span id="washerPower">0 Watts</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>Total Power</strong></td>
+          <td></td>
+          <td><span id="totalPower">0 Watts</span></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <script>
+      function calculateTotalPower() {
+        var acPower = parseInt(document.getElementById("acCount").value) || 0;
+        var ironPower =
+          parseInt(document.getElementById("ironCount").value) || 0;
+        var fridgePower =
+          parseInt(document.getElementById("fridgeCount").value) || 0;
+        var pumpPower =
+          parseInt(document.getElementById("pumpCount").value) || 0;
+        var fanPower = parseInt(document.getElementById("fanCount").value) || 0;
+        var bulbPower =
+          parseInt(document.getElementById("bulbCount").value) || 0;
+        var tvPower = parseInt(document.getElementById("tvCount").value) || 0;
+        var washerPower =
+          parseInt(document.getElementById("washerCount").value) || 0;
+
+        var totalPower =
+          acPower * 1000 +
+          ironPower * 1100 +
+          fridgePower * 750 +
+          pumpPower * 1000 +
+          fanPower * 120 +
+          bulbPower * 25 +
+          tvPower * 150 +
+          washerPower * 300;
+
+        document.getElementById("acPower").textContent =
+          acPower * 1000 + " Watts";
+        document.getElementById("ironPower").textContent =
+          ironPower * 1100 + " Watts";
+        document.getElementById("fridgePower").textContent =
+          fridgePower * 750 + " Watts";
+        document.getElementById("pumpPower").textContent =
+          pumpPower * 1000 + " Watts";
+        document.getElementById("fanPower").textContent =
+          fanPower * 120 + " Watts";
+        document.getElementById("bulbPower").textContent =
+          bulbPower * 25 + " Watts";
+        document.getElementById("tvPower").textContent =
+          tvPower * 150 + " Watts";
+        document.getElementById("washerPower").textContent =
+          washerPower * 300 + " Watts";
+
+        document.getElementById("totalPower").textContent =
+          totalPower + " Watts";
+      }
+    </script>
+  </body>
+</html>
