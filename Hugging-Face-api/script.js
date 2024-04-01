@@ -1,7 +1,7 @@
 async function query(data, apiKey) {
   try {
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/openai-community/gpt2",
+      "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -36,3 +36,15 @@ form.addEventListener("submit", async function (event) {
       "Error processing the query";
   }
 });
+
+/*
+
+OpenAi Gpt-2
+
+"https://api-inference.huggingface.co/models/openai-community/gpt2",
+
+Llama 2 (paid model)
+
+"https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf",
+
+*/
