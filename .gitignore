@@ -1,1 +1,6 @@
 *.map
+node_modules
+practice.*
+tailwind.*
+*.json
+styles
