@@ -1,0 +1,65 @@
+body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    background-color: #3498db;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+/* Fade In */
+.fade-in {
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Fade Out */
+.fade-out {
+    animation: fadeOut 2s ease-in-out forwards;
+    animation-iteration-count: infinite;
+
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Fade In and Out */
+.fade-in-out {
+    animation: fadeInOut 4s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Fade In with Scale */
+.fade-in-scale {
+    animation: fadeInScale 2s ease-in-out forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
