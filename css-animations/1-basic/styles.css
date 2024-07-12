@@ -1,0 +1,66 @@
+.flex{
+    display: flex;
+}
+
+.box{
+    width: 150px;
+    padding: 20px 15px;
+    border-radius: 5px;
+    background-color: rgb(67, 237, 237);
+    font-size: 1.5em;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px;
+    animation-duration: 2.8s;
+    animation-iteration-count: infinite;
+}
+
+#box1{
+    animation-name: SlideRight;
+}
+#box2{
+    animation-name: SlideLeft;
+}
+#box3{
+    animation-name: SlideUp;
+    mix-blend-mode: difference;
+}
+#box4{
+    animation-name: SlideDown;
+}
+
+#box5{
+    animation-name: RotateXYZ;
+}
+
+@keyframes SlideRight {
+    from{
+        transform: translateX(15rem);
+    }
+}
+
+@keyframes SlideLeft {
+    to{
+        transform: translateX(15rem);
+    }
+}
+
+@keyframes SlideUp {
+    from {
+        transform: translateY(15rem);
+    }
+}
+@keyframes SlideDown {
+    to {
+        transform: translateY(15rem);
+    }
+}
+
+@keyframes RotateXYZ{
+    50% {
+        transform: rotateZ(180deg);
+    }
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
