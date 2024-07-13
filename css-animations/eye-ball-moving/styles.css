@@ -1,0 +1,32 @@
+body {
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+#eyes .eye {
+  position: absolute;
+  font-size: 3em;
+  color: #000;
+  top: 135px;
+}
+
+#eyes .eye1 {
+  left: 46%;
+}
+#eyes .eye2 {
+  left: 53%;
+}
+
+.eyeball {
+  border: 1px solid red;
+  padding: 0;
+}
