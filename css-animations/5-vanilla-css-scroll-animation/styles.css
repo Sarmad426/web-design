@@ -1,0 +1,40 @@
+body {
+  font-family: sans-serif;
+  background-color: #131316;
+  color: #ececec;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  padding: 10px 20px;
+}
+
+h1,
+section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+section {
+  animation: fadeIn 3s linear;
+  animation-timeline: view();
+  filter: blur(8px) repeat scroll 0;
+  transition: all 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    color: white !important;
+  }
+}
