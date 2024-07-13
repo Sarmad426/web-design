@@ -1,0 +1,123 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  margin-left: 75%;
+  margin-bottom: 5px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 7px;
+  cursor: pointer;
+  transition: all 350ms ease-in-out;
+  text-decoration: none;
+}
+
+button:hover {
+  background-color: rgb(0, 150, 0);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.product-details {
+  display: flex;
+  align-items: center;
+}
+
+.product-details .img-card {
+  width: 45%;
+  padding: 10px;
+  margin: 40px;
+}
+
+.product-details .img-card img {
+  width: 75%;
+  height: 450px;
+}
+
+.product-details .img-card .details {
+  margin: 15px 0;
+}
+
+.details h2 {
+  margin: 10px 0;
+}
+
+.actions-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-details .item-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.product-details .item-buttons span {
+  font-size: clamp(1.125em, 2vh, 1.25em);
+}
+
+.product-details .item-buttons button {
+  width: 100px;
+  padding: 5px 10px;
+  font-size: 24px;
+}
+
+.product-details .header-button button {
+  width: 200px;
+  padding: 8px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-to-left {
+  from {
+    transform: translateX(-4rem);
+  }
+  to {
+    transform: translateX(0rem);
+  }
+}
+@keyframes slide-to-right {
+  from {
+    transform: translateX(0rem);
+  }
+  to {
+    transform: translateX(-4rem);
+  }
+}
+
+::view-transition-old(root) {
+  animation: fade-out 350ms cubic-bezier(0, 0, 0.2, 1),
+    slide-to-right 350ms cubic-bezier(0, 0, 0.2, 1);
+}
+::view-transition-new(root) {
+  animation: fade-in 350ms cubic-bezier(0, 0, 0.2, 1) slide-to-left 350ms
+    cubic-bezier(0, 0, 0.2, 1);
+  mix-blend-mode: normal;
+}
