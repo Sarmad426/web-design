@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HTML Dialog, Javascript Internationalization API"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>HTML Dialog JS Internationalization API</title>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <main>
+      <!-- Dialogs -->
+      <dialog id="dialog1" class="dialog dialog1">
+        <div class="dialog-main-div">
+          <div>
+            <img src="/assets/images/shoes.gif" alt="product Card image" />
+          </div>
+          <div>
+            <h3>Product Title</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Reiciendis sunt ducimus minima possimus cupiditate voluptate
+              laborum accusamus nisi quae eligendi!
+            </p>
+          </div>
+          <div>
+            <button onclick="dialog1.close()">Buy Now</button>
+          </div>
+        </div>
+      </dialog>
+      <dialog id="dialog2" class="dialog dialog2">
+        <div class="dialog-main-div">
+          <div>
+            <img src="/assets/images/f6.jpg" alt="product Card image" />
+          </div>
+          <div>
+            <h3>Product Title</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Reiciendis sunt ducimus minima possimus cupiditate voluptate
+              laborum accusamus nisi quae eligendi!
+            </p>
+          </div>
+          <div>
+            <button onclick="dialog2.close()">Buy Now</button>
+          </div>
+        </div>
+      </dialog>
+      <!-- Cards -->
+      <section class="cards">
+        <div class="card card1">
+          <div class="card-main-div">
+            <div>
+              <img src="/assets/images/shoes.gif" alt="product Card image" />
+            </div>
+            <div>
+              <h3>Product Title</h3>
+              <span class="price product-price-1"></span>
+            </div>
+            <div class="card-buttons">
+              <button onclick="dialog1.showModal()">View More</button>
+              <span class="sale-product1"></span>
+            </div>
+          </div>
+        </div>
+        <div class="card card2">
+          <div class="card-main-div">
+            <div>
+              <img src="/assets/images/f6.jpg" alt="product Card image" />
+            </div>
+            <div>
+              <h3>Product Title</h3>
+              <span class="price product-price-2"></span>
+            </div>
+            <div class="card-buttons">
+              <button onclick="dialog2.showModal()">View More</button>
+              <span class="sale-product2"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
