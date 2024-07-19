@@ -1,0 +1,77 @@
+/* Reusable variables */
+:root {
+  --background-color: #272727;
+  --primary-text-color: #dedede;
+  --primary-edit-button: rgb(50, 220, 160);
+  --primary-edit-hover-color: rgb(32, 244, 180);
+  --primary-delete-color: rgb(241, 51, 18);
+  --primary-delete-hover-color: rgb(251, 86, 57);
+}
+
+* {
+  font-family: "Ubuntu", Inter, monospace, system-ui;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+
+  main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+
+    table,
+    thead,
+    th,
+    tbody,
+    tr,
+    td {
+      border: 1px solid var(--primary-text-color);
+      border-collapse: collapse;
+      padding: 15px;
+    }
+
+    th,
+    td {
+      width: 10rem;
+      text-align: center;
+    }
+
+    table tbody tr td img {
+      width: 60px;
+      border-radius: 5px;
+    }
+    .edit-button {
+      background-color: var(--primary-edit-button);
+    }
+
+    .edit-button:hover {
+      background-color: var(--primary-edit-hover-color);
+    }
+
+    .delete-button {
+      background-color: var(--primary-delete-color);
+      color: white;
+    }
+
+    .delete-button:hover {
+      background-color: var(--primary-delete-hover-color);
+    }
+  }
+}
+
+/* Custom button styles */
+.button {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
