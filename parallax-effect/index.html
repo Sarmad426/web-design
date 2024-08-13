@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parallax effect</title>
+    <style>
+      .hero {
+        min-height: 75vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background-image: url("/assets/images/mountains.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
+        h1 {
+          font-size: 80px;
+          color: white;
+        }
+      }
+      .section1 {
+        height: 90vh;
+        margin-top: 200px;
+        h2 {
+          font-size: 60px;
+        }
+      }
+      /* Responsive hero section */
+      @media (max-width: 768px) {
+        .hero {
+          height: 30vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <h1>Para <br />llax</h1>
+    </section>
+    <section class="section1">
+      <h2>Another section</h2>
+    </section>
+  </body>
+</html>
