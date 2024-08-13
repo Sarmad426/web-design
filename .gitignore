@@ -4,3 +4,7 @@ practice.*
 tailwind.*
 *.json
 styles
+
+*.jpg
+*.gif
+*.webp
