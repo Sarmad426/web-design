@@ -53,6 +53,9 @@ main {
   transform: translateX(-200px);
   transition: opacity 1s ease-in-out, transform 1s ease-in-out,
     box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .card img {
@@ -71,6 +74,18 @@ main {
   transform: translateX(0);
 }
 
-.card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #373737;
+    color: #fefefe;
+  }
+  .card {
+    background-color: black;
+    &:hover {
+      box-shadow: 0 8 16 rgba(240, 240, 240, 0.8);
+    }
+    p {
+      color: white;
+    }
+  }
 }
