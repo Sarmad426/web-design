@@ -1,0 +1,67 @@
+:root {
+  --warning-color: orange;
+  --success-color: green;
+  --error-color: red;
+  --button-color: rgb(152, 51, 247);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+section form {
+  padding: 10px;
+  input {
+    padding: 10px;
+    width: 20rem;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 15px;
+    outline: none;
+
+    &:not(:placeholder-shown):valid {
+      border-color: var(--success-color);
+    }
+    &:not(:placeholder-shown):invalid {
+      border-color: var(--error-color);
+    }
+    &:focus:invalid {
+      border-color: var(--warning-color);
+    }
+  }
+
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: var(--button-color);
+    color: white;
+    cursor: pointer;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #eee;
+  }
+  input {
+    border-color: rgb(152, 151, 151);
+    background-color: transparent;
+    color: inherit;
+  }
+}
