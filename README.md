@@ -11,3 +11,7 @@ Front-end web design and development using **HTML**, **CSS**,
 - Data tables
 - Color themes
 - Javascript animations
+- Css form validations
+- Parallax effect
+- Confetti animation
+HTML, CSS and JS tips and new rolling out features.
