@@ -15,3 +15,12 @@ Front-end web design and development using **HTML**, **CSS**,
 - Parallax effect
 - Confetti animation
 HTML, CSS and JS tips and new rolling out features.
+
+**Enhance Css:**
+
+- Css native vertical text
+- Flip elements easily
+- Smooth scrolling
+- Snap horizontal scrolling
+- Resize elements (vertically, horizontally,both)
+- Gradient text
