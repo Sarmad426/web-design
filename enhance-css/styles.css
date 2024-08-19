@@ -1,0 +1,127 @@
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+/* Smooth scrolling */
+
+html {
+  scroll-behavior: smooth;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-text h2 {
+  writing-mode: vertical-lr;
+}
+
+.flip-img {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .images {
+    display: flex;
+    gap: 28px;
+    div {
+      display: inherit;
+      flex-direction: column;
+      gap: 10px;
+    }
+    div:nth-child(2) img {
+      /* Flip image */
+      transform: scaleX(-1);
+    }
+  }
+}
+
+#second-sec {
+  /* height: 80vh; */
+  margin: 200px auto;
+}
+
+/*  */
+
+/* Image container */
+#second-sec .img-container {
+  width: 20rem;
+  display: flex;
+  overflow-x: scroll;
+  /* Snap scroll */
+  scroll-snap-type: x mandatory;
+  div {
+    min-width: 20rem;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Snap scroll */
+    scroll-snap-align: center;
+  }
+  div:nth-child(1) {
+    background-color: indigo;
+  }
+  div:nth-child(2) {
+    background-color: blueviolet;
+  }
+  div:nth-child(3) {
+    background-color: teal;
+  }
+  div:nth-child(4) {
+    background-color: goldenrod;
+  }
+  div:nth-child(5) {
+    background-color: saddlebrown;
+  }
+}
+
+#second-sec .resize-elements {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 30px;
+  margin-top: 50px;
+  div {
+    overflow: auto;
+    width: 15rem;
+    height: 10rem;
+    background-color: rgb(58, 58, 58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  div:nth-child(1) {
+    resize: vertical;
+  }
+  div:nth-child(2) {
+    resize: horizontal;
+  }
+  div:nth-child(3) {
+    resize: both;
+  }
+}
+
+#second-sec .gradient-text {
+  background: linear-gradient(90deg, teal, blueviolet);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 50px;
+  -webkit-user-select: none;
+  user-select: none;
+  h3 {
+    pointer-events: none;
+  }
+}
+
+/* Dark theme styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #fff;
+  }
+}
