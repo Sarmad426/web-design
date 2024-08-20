@@ -1,0 +1,68 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+@keyframes rotateRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-ring {
+  animation: rotateRing 10s linear infinite;
+}
+
+.icon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Positioning the icons in a circular layout using trigonometric functions */
+.icon:nth-child(1) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg) translate(80px) rotate(-0deg);
+}
+
+.icon:nth-child(2) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(72deg) translate(80px) rotate(-72deg);
+}
+
+.icon:nth-child(3) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(144deg) translate(80px)
+    rotate(-144deg);
+}
+
+.icon:nth-child(4) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(216deg) translate(80px)
+    rotate(-216deg);
+}
+
+.icon:nth-child(5) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(288deg) translate(80px)
+    rotate(-288deg);
+}
