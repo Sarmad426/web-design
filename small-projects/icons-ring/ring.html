@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Icon ring</title>
+    <style>
+      main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .icons {
+        display: flex;
+        gap: 10px;
+        width: 20rem;
+        min-height: 20rem;
+        border-radius: 50%;
+        background-color: bisque;
+        position: relative;
+      }
+      .icon {
+        position: absolute;
+      }
+      .icon:nth-child(1) {
+        left: 45%;
+        top: 5%;
+      }
+      .icon:nth-child(2) {
+        right: 5%;
+        top: 45%;
+      }
+      .icon:nth-child(3) {
+        bottom: 5%;
+        left: 45%;
+      }
+      .icon:nth-child(4) {
+        left: 5%;
+        top: 45%;
+      }
+      .icon:nth-child(5) {
+        left: 45%;
+        top: 45%;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="icons">
+        <div class="icon">
+          <img src="/assets/svg/linkedin-color.svg" alt="Linkedin" width="25" />
+        </div>
+        <div class="icon">
+          <img src="/assets/svg/github-color.svg" alt="Linkedin" width="25" />
+        </div>
+        <div class="icon">
+          <img src="/assets/svg/facebook-color.svg" alt="Linkedin" width="25" />
+        </div>
+        <div class="icon">
+          <img src="/assets/svg/x-color.svg" alt="Linkedin" width="25" />
+        </div>
+        <div class="icon">
+          <img
+            src="/assets/svg/instagram-color.svg"
+            alt="Linkedin"
+            width="25"
+          />
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
