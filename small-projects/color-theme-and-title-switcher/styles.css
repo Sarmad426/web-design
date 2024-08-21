@@ -1,0 +1,41 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Consolas", "Cascadia code", system-ui;
+}
+a {
+  padding: 5px;
+  background-color: orange;
+  text-decoration: none;
+  margin-top: 25px;
+}
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+    color: #ededed;
+  }
+  a {
+    background-color: rgb(115, 12, 189);
+    color: white;
+  }
+}
+.dark {
+  background-color: #1a1a1a;
+  color: #ededed;
+}
+.light {
+  background-color: white;
+  color: black;
+}
+button {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}

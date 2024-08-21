@@ -5,46 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Color theme</title>
     <link rel="icon" type="image/png" href="/assets/logos/logo.png" />
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100vw;
-        height: 100vh;
-        font-family: "Consolas", "Cascadia code", system-ui;
-      }
-      a {
-        padding: 5px;
-        background-color: orange;
-        text-decoration: none;
-      }
-      /* Dark theme */
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: #1a1a1a;
-          color: #ededed;
-        }
-        a {
-          background-color: rgb(115, 12, 189);
-          color: white;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <h1>Sarmad Rafique</h1>
+    <button class="light">
+      <img src="/assets/svg/dark_mode.svg" alt="Dark mode" />
+    </button>
+    <button class="dark">
+      <img src="/assets/svg/light_mode.svg" alt="Dark mode" />
+    </button>
     <a href="https://github.com/sarmad426">Follow on Github</a>
-    <script>
-      // Switching title
-      window.addEventListener("blur", () => {
-        document.title = "Come back";
-      });
-      // Reverting it back to original title
-      window.addEventListener("focus", () => {
-        document.title = "Color theme";
-      });
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>
