@@ -1,7 +1,7 @@
 # Web Design and Development
 
 Front-end web design and development using **HTML**, **CSS**,
-**SCSS** and **Javascript**.
+**SCSS**, **Tailwind Css** and **Javascript**.
 
 ## Hot topics
 
@@ -24,3 +24,15 @@ HTML, CSS and JS tips and new rolling out features.
 - Snap horizontal scrolling
 - Resize elements (vertically, horizontally,both)
 - Gradient text
+
+## Tailwind CSS
+
+Tailwind css is a utility first framework for css. It is considered to be better than **Bootstrap**. It offers more customization than bootstrap.
+
+Installation guide: <https://tailwindcss.com/docs/installation>
+
+**Tailwind watch command:**
+
+```bash
+npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+```
