@@ -38,7 +38,19 @@ canvas.addEventListener("mousedown", startPosition);
 canvas.addEventListener("mouseup", endPosition);
 canvas.addEventListener("mousemove", draw);
 
-document.getElementById("colorPicker").addEventListener("change", (e) => {
+const colorPicker = document.getElementById("colorPicker");
+
+if (window.getComputedStyle(canvas).backgroundColor == "rgb(51, 51, 51)") {
+  colorPicker.value = "#ffffff";
+  brushColor = colorPicker.value;
+} else {
+  colorPicker.value = "#000000";
+  brushColor = colorPicker.value;
+}
+
+console.log("BG color", window.getComputedStyle(canvas).backgroundColor);
+
+colorPicker.addEventListener("change", (e) => {
   brushColor = e.target.value;
 });
 
