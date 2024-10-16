@@ -48,8 +48,6 @@ if (window.getComputedStyle(canvas).backgroundColor == "rgb(51, 51, 51)") {
   brushColor = colorPicker.value;
 }
 
-console.log("BG color", window.getComputedStyle(canvas).backgroundColor);
-
 colorPicker.addEventListener("change", (e) => {
   brushColor = e.target.value;
 });
