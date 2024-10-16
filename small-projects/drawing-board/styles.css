@@ -12,11 +12,28 @@ body {
   justify-content: center;
   min-height: 100vh;
   background-color: #f0f0f0;
-  margin: 40px;
+  margin: 10px;
 }
 
 h1 {
   margin-bottom: 10px;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+  flex-direction: row-reverse;
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    div {
+      display: flex;
+      gap: 5px;
+    }
+  }
 }
 
 canvas {
@@ -30,11 +47,10 @@ canvas {
 }
 
 button {
-  padding: 7px 12px;
+  padding: 7px 10px;
   font-size: 16px;
-  margin-right: 10px;
   cursor: pointer;
-  background-color: rgb(6, 133, 142);
+  background-color: rgb(91, 91, 91);
   color: white;
   border: none;
   border-radius: 5px;

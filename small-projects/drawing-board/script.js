@@ -1,7 +1,7 @@
 const canvas = document.getElementById("drawingBoard");
 const ctx = canvas.getContext("2d");
-canvas.width = 800;
-canvas.height = 500;
+canvas.width = 700;
+canvas.height = 450;
 
 let painting = false;
 let brushColor = "#000000";
