@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ComfyUI Quick Test</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        max-width: 900px;
+        margin: 1rem auto;
+        padding: 0 1rem;
+        background: #0f111a;
+        color: #e3e8ff;
+        line-height: 1.35;
+      }
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+      }
+      label {
+        display: block;
+        margin: 0.75rem 0 0.25rem;
+        font-weight: 600;
+      }
+      textarea,
+      input {
+        width: 100%;
+        font-family: monospace;
+        border-radius: 6px;
+        border: 1px solid #2f3245;
+        background: #1f2233;
+        color: #fff;
+        padding: 0.5rem;
+      }
+      button {
+        padding: 0.75rem 1rem;
+        border: none;
+        background: #6366f1;
+        color: white;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 0.5rem;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .card {
+        background: #1f2233;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.3);
+        margin-bottom: 1rem;
+      }
+      #output-img {
+        max-width: 100%;
+        border: 2px solid #444;
+        border-radius: 6px;
+        margin-top: 0.5rem;
+        background: #000;
+      }
+      pre {
+        background: #0e0f22;
+        padding: 0.5rem;
+        border-radius: 6px;
+        overflow: auto;
+      }
+      .small {
+        font-size: 0.85rem;
+        color: #999;
+      }
+      .error {
+        background: #6b1f1f;
+        padding: 0.5rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+      }
+      .success {
+        background: #1f472f;
+        padding: 0.5rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ComfyUI Graph Test</h1>
+    <div class="card">
+      <div class="row">
+        <div style="flex: 1 1 300px">
+          <label for="positive">Positive Prompt</label>
+          <input id="positive" type="text" value="A Hollywood male star" />
+        </div>
+        <div style="flex: 1 1 300px">
+          <label for="negative">Negative Prompt</label>
+          <input id="negative" type="text" value="text, watermark" />
+        </div>
+      </div>
+      <label for="endpoint">ComfyUI Tunnel API Base URL</label>
+      <input
+        id="endpoint"
+        type="text"
+        value="https://titten-december-pop-riding.trycloudflare.com/api/graph"
+      />
+      <div class="small">
+        If ComfyUI expects a different path (graph submission), adjust this.
+        Example might be <code>/api/graph</code> or similar.
+      </div>
+
+      <button id="generateBtn">Generate Image</button>
+
+      <div id="status" class="small" style="margin-top: 0.5rem"></div>
+    </div>
+
+    <div class="card">
+      <h2>Result</h2>
+      <div id="result-wrapper">
+        <img id="output-img" alt="Generated image will appear here" />
+        <div id="error" class="error" style="display: none"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Raw Graph JSON</h2>
+      <pre id="graph-json"></pre>
+    </div>
+
+    <script>
+      // Base graph from user file, with placeholders for prompt/negative
+      const baseGraph = {
+        3: {
+          inputs: {
+            seed: 1103960736441553,
+            steps: 20,
+            cfg: 8,
+            sampler_name: "euler",
+            scheduler: "normal",
+            denoise: 1,
+            model: ["4", 0],
+            positive: ["6", 0],
+            negative: ["7", 0],
+            latent_image: ["5", 0],
+          },
+          class_type: "KSampler",
+          _meta: { title: "KSampler" },
+        },
+        4: {
+          inputs: { ckpt_name: "v1-5-pruned-emaonly-fp16.safetensors" },
+          class_type: "CheckpointLoaderSimple",
+          _meta: { title: "Load Checkpoint" },
+        },
+        5: {
+          inputs: { width: 512, height: 512, batch_size: 1 },
+          class_type: "EmptyLatentImage",
+          _meta: { title: "Empty Latent Image" },
+        },
+        6: {
+          inputs: { text: "A Hollywood male star", clip: ["4", 1] },
+          class_type: "CLIPTextEncode",
+          _meta: { title: "CLIP Text Encode (Prompt)" },
+        },
+        7: {
+          inputs: { text: "text, watermark", clip: ["4", 1] },
+          class_type: "CLIPTextEncode",
+          _meta: { title: "CLIP Text Encode (Prompt)" },
+        },
+        8: {
+          inputs: { samples: ["3", 0], vae: ["4", 2] },
+          class_type: "VAEDecode",
+          _meta: { title: "VAE Decode" },
+        },
+        10: {
+          inputs: { images: ["8", 0] },
+          class_type: "PreviewImage",
+          _meta: { title: "Preview Image" },
+        },
+      };
+
+      const positiveInput = document.getElementById("positive");
+      const negativeInput = document.getElementById("negative");
+      const generateBtn = document.getElementById("generateBtn");
+      const statusEl = document.getElementById("status");
+      const outputImg = document.getElementById("output-img");
+      const errorEl = document.getElementById("error");
+      const endpointInput = document.getElementById("endpoint");
+      const graphJsonPre = document.getElementById("graph-json");
+
+      function buildGraph() {
+        const g = JSON.parse(JSON.stringify(baseGraph));
+        g["6"].inputs.text = positiveInput.value;
+        g["7"].inputs.text = negativeInput.value;
+        return g;
+      }
+
+      function updateGraphDisplay() {
+        graphJsonPre.textContent = JSON.stringify(buildGraph(), null, 2);
+      }
+
+      async function generate() {
+        errorEl.style.display = "none";
+        outputImg.src = "";
+        statusEl.textContent = "Sending request...";
+        generateBtn.disabled = true;
+
+        const url = endpointInput.value.trim();
+        const graph = buildGraph();
+
+        try {
+          // Primary attempt: assume binary image back (PNG/JPEG)
+          const resp = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(graph),
+          });
+
+          if (!resp.ok) {
+            const text = await resp.text();
+            throw new Error(`Status ${resp.status}: ${text}`);
+          }
+
+          const contentType = resp.headers.get("content-type") || "";
+          if (contentType.includes("application/json")) {
+            // Possibly base64 payload inside JSON
+            const j = await resp.json();
+            // Heuristic: look for base64-like field
+            let b64 = null;
+            for (const v of Object.values(j)) {
+              if (
+                typeof v === "string" &&
+                v.match(/^data:image\/[a-z]+;base64,/)
+              ) {
+                b64 = v.split(",", 2)[1];
+                break;
+              }
+              if (
+                typeof v === "string" &&
+                v.length > 100 &&
+                /^[A-Za-z0-9+/=]+$/.test(v)
+              ) {
+                b64 = v; // fallback guess
+                break;
+              }
+            }
+            if (!b64)
+              throw new Error("Couldn't find image data in JSON response");
+            const blob = await (
+              await fetch(`data:image/png;base64,${b64}`)
+            ).blob();
+            outputImg.src = URL.createObjectURL(blob);
+            statusEl.textContent = "Rendered from JSON base64 response.";
+          } else {
+            // Binary image path
+            const blob = await resp.blob();
+            outputImg.src = URL.createObjectURL(blob);
+            statusEl.textContent = "Rendered binary image response.";
+          }
+        } catch (err) {
+          console.error(err);
+          errorEl.textContent = err.message;
+          errorEl.style.display = "block";
+          statusEl.textContent = "Failed.";
+        } finally {
+          generateBtn.disabled = false;
+        }
+      }
+
+      generateBtn.addEventListener("click", async () => {
+        updateGraphDisplay();
+        await generate();
+      });
+
+      // init
+      updateGraphDisplay();
+    </script>
+  </body>
+</html>
