@@ -493,22 +493,22 @@
       // Dynamic library loading
       async function loadFFmpegLibraries() {
         try {
-          // Try multiple CDN sources for better reliability
+          // Try compatible FFmpeg versions that work with 0.12.10 core
           const sources = [
             {
               ffmpeg:
-                "https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.js",
-              util: "https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/util.js",
-            },
-            {
-              ffmpeg:
-                "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.js",
+                "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js",
               util: "https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.js",
             },
             {
               ffmpeg:
-                "https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js",
+                "https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js",
               util: "https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/util.js",
+            },
+            {
+              ffmpeg:
+                "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js",
+              util: "https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.js",
             },
           ];
 
@@ -616,8 +616,9 @@
           const { fetchFile, toBlobURL } = FFmpegUtil;
           ffmpeg = new FFmpegClass();
 
-          // Try the latest version first
-          let baseURL = "https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd";
+          // Use the working version 0.12.10
+          let baseURL =
+            "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd";
           let coreURL, wasmURL;
 
           try {
@@ -626,12 +627,12 @@
               "text/javascript"
             );
             wasmURL = await toBlobURL(
-              `${baseURL}/ffmpeg-core.wasm`,
+              "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd/ffmpeg-core.wasm",
               "application/wasm"
             );
           } catch (e) {
-            // Fallback to older version if the latest doesn't work
-            baseURL = "https://unpkg.com/@ffmpeg/core@0.12.2/dist/umd";
+            // Fallback to unpkg CDN if jsdelivr fails
+            baseURL = "https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
             coreURL = await toBlobURL(
               `${baseURL}/ffmpeg-core.js`,
               "text/javascript"
@@ -933,6 +934,18 @@
           status.textContent = "Processing video with watermark...";
           progressFill.style.width = "20%";
 
+          // Debug: Log input file info
+          console.log("Processing video:", videoFile.name);
+          console.log("Watermark:", watermarkFile.name);
+          console.log(
+            "Position:",
+            position,
+            "Size:",
+            size + "%",
+            "Opacity:",
+            opacity + "%"
+          );
+
           // Calculate watermark position based on selection
           let overlayFilter = "";
           const padding = 20;
@@ -967,8 +980,8 @@
               overlayFilter = `overlay=main_w-overlay_w-${padding}:main_h-overlay_h-${padding}`;
           }
 
-          // Build FFmpeg command with proper codec settings for file size optimization
-          const ffmpegArgs = [
+          // Build FFmpeg command to properly burn watermark into video with audio preservation
+          let ffmpegArgs = [
             "-i",
             `input.${originalExtension}`,
             "-i",
@@ -976,27 +989,31 @@
             "-filter_complex",
             `[1:v]scale=iw*${size / 100}:ih*${
               size / 100
-            }[wm];[0:v][wm]${overlayFilter}:format=auto:alpha=${
+            }:force_original_aspect_ratio=decrease[wm];[wm]format=rgba,colorchannelmixer=aa=${
               opacity / 100
-            }[v]`,
+            }[wmop];[0:v][wmop]${overlayFilter}:shortest=1[outv]`,
             "-map",
-            "[v]",
+            "[outv]",
             "-map",
-            "0:a?", // Copy audio if present
+            "0:a?", // Map audio if present
             "-c:v",
-            "libx264", // Use H.264 for better compatibility and size
+            "libx264",
             "-crf",
-            "23", // Constant Rate Factor for good quality/size balance
+            "23",
             "-preset",
-            "medium", // Balanced encoding speed/efficiency
+            "medium",
             "-c:a",
-            "aac", // Use AAC for audio (widely compatible)
+            "aac", // Use AAC encoding for better compatibility
             "-b:a",
-            "128k", // Reasonable audio bitrate
+            "128k", // Set audio bitrate
             "-movflags",
-            "+faststart", // Optimize for web playback
+            "+faststart",
+            "-shortest", // End output when shortest input ends
             `output.${outputExtension}`,
           ];
+
+          // Debug: Log FFmpeg command
+          console.log("FFmpeg command:", ffmpegArgs.join(" "));
 
           // Set up progress monitoring
           ffmpeg.on("progress", ({ progress }) => {
@@ -1006,8 +1023,47 @@
             status.textContent = `Processing video... ${progressPercent}%`;
           });
 
-          // Execute FFmpeg command
-          await ffmpeg.exec(ffmpegArgs);
+          // Execute FFmpeg command with enhanced error handling
+          try {
+            await ffmpeg.exec(ffmpegArgs);
+          } catch (firstError) {
+            console.warn("First attempt failed:", firstError);
+
+            // Try with audio copy instead of AAC encoding
+            status.textContent = "Retrying with audio copy mode...";
+            const copyAudioArgs = [...ffmpegArgs];
+            const audioCodecIndex = copyAudioArgs.indexOf("-c:a");
+            if (audioCodecIndex !== -1) {
+              copyAudioArgs[audioCodecIndex + 1] = "copy";
+              // Remove bitrate setting when copying
+              const bitrateIndex = copyAudioArgs.indexOf("-b:a");
+              if (bitrateIndex !== -1) {
+                copyAudioArgs.splice(bitrateIndex, 2);
+              }
+            }
+
+            try {
+              await ffmpeg.exec(copyAudioArgs);
+            } catch (secondError) {
+              console.warn("Second attempt failed:", secondError);
+
+              // Final fallback: video only
+              status.textContent = "Creating video-only output...";
+              const videoOnlyArgs = ffmpegArgs.filter(
+                (arg) =>
+                  !arg.includes("0:a") &&
+                  arg !== "-c:a" &&
+                  arg !== "aac" &&
+                  arg !== "-b:a" &&
+                  arg !== "128k"
+              );
+
+              await ffmpeg.exec(videoOnlyArgs);
+
+              status.textContent =
+                "Video processed (audio could not be preserved)...";
+            }
+          }
 
           status.textContent = "Finalizing output...";
           progressFill.style.width = "95%";
