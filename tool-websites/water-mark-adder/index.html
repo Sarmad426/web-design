@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Watermark Tool - AISoftDevs</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .main-content {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+      }
+
+      .upload-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .upload-box {
+        border: 3px dashed #667eea;
+        border-radius: 15px;
+        padding: 40px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        background: #f8f9ff;
+      }
+
+      .upload-box:hover {
+        border-color: #764ba2;
+        background: #f0f2ff;
+        transform: translateY(-2px);
+      }
+
+      .upload-box.has-file {
+        border-color: #10b981;
+        background: #f0fdf4;
+      }
+
+      .upload-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        color: #667eea;
+      }
+
+      .upload-box h3 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .upload-box p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .preview-section {
+        margin: 30px 0;
+        position: relative;
+        text-align: center;
+      }
+
+      #previewVideo {
+        max-width: 100%;
+        max-height: 500px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .controls {
+        margin-top: 30px;
+      }
+
+      .control-group {
+        margin-bottom: 25px;
+      }
+
+      .control-group label {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      input[type="range"] {
+        flex: 1;
+        height: 8px;
+        border-radius: 5px;
+        background: #e5e7eb;
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #667eea;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      input[type="range"]::-webkit-slider-thumb:hover {
+        background: #764ba2;
+        transform: scale(1.2);
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #667eea;
+        cursor: pointer;
+        border: none;
+      }
+
+      .value-display {
+        min-width: 50px;
+        text-align: right;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .position-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        max-width: 300px;
+      }
+
+      .position-btn {
+        padding: 15px;
+        border: 2px solid #e5e7eb;
+        background: white;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .position-btn:hover {
+        border-color: #667eea;
+        background: #f8f9ff;
+      }
+
+      .position-btn.active {
+        border-color: #667eea;
+        background: #667eea;
+        color: white;
+      }
+
+      .btn {
+        padding: 15px 40px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      .status {
+        text-align: center;
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        display: none;
+      }
+
+      .status.processing {
+        background: #fef3c7;
+        color: #92400e;
+        display: block;
+      }
+
+      .status.success {
+        background: #d1fae5;
+        color: #065f46;
+        display: block;
+      }
+
+      .status.error {
+        background: #fee2e2;
+        color: #991b1b;
+        display: block;
+      }
+
+      .loader {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        margin-left: 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .file-name {
+        margin-top: 10px;
+        color: #10b981;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 15px;
+        display: none;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .upload-section {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .main-content {
+          padding: 20px;
+        }
+
+        .position-grid {
+          max-width: 100%;
+        }
+      }
+
+      canvas {
+        display: none;
+      }
+
+      .features-info {
+        margin-top: 15px;
+        padding: 15px;
+        background: #f8f9ff;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .features-info ul {
+        margin: 8px 0 0 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎬 Video Watermark Tool</h1>
+        <p class="subtitle">
+          Add your watermark to videos instantly - Powered by AISoftDevs
+        </p>
+      </header>
+
+      <div class="main-content">
+        <div class="upload-section">
+          <div
+            class="upload-box"
+            id="videoUploadBox"
+            onclick="document.getElementById('videoInput').click()"
+          >
+            <div class="upload-icon">🎥</div>
+            <h3>Upload Video</h3>
+            <p>Click to select or drag and drop</p>
+            <p style="margin-top: 5px; font-size: 0.8rem">MP4, WebM, MOV</p>
+            <div class="file-name" id="videoFileName"></div>
+            <input type="file" id="videoInput" accept="video/*" />
+          </div>
+
+          <div
+            class="upload-box"
+            id="watermarkUploadBox"
+            onclick="document.getElementById('watermarkInput').click()"
+          >
+            <div class="upload-icon">🖼️</div>
+            <h3>Upload Watermark</h3>
+            <p>Click to select or drag and drop</p>
+            <p style="margin-top: 5px; font-size: 0.8rem">
+              PNG, JPG, SVG (PNG recommended)
+            </p>
+            <div class="file-name" id="watermarkFileName"></div>
+            <input type="file" id="watermarkInput" accept="image/*" />
+          </div>
+        </div>
+
+        <div class="preview-section">
+          <video id="previewVideo" controls></video>
+        </div>
+
+        <div class="controls" id="controls" style="display: none">
+          <div class="control-group">
+            <label>Watermark Position</label>
+            <div class="position-grid">
+              <button class="position-btn" data-position="top-left">
+                ↖ Top Left
+              </button>
+              <button class="position-btn" data-position="top-center">
+                ↑ Top Center
+              </button>
+              <button class="position-btn" data-position="top-right">
+                ↗ Top Right
+              </button>
+              <button class="position-btn" data-position="center-left">
+                ← Left
+              </button>
+              <button class="position-btn" data-position="center">
+                ⊙ Center
+              </button>
+              <button class="position-btn" data-position="center-right">
+                → Right
+              </button>
+              <button class="position-btn" data-position="bottom-left">
+                ↙ Bottom Left
+              </button>
+              <button class="position-btn" data-position="bottom-center">
+                ↓ Bottom Center
+              </button>
+              <button class="position-btn active" data-position="bottom-right">
+                ↘ Bottom Right
+              </button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Watermark Size</label>
+            <div class="slider-container">
+              <input type="range" id="sizeSlider" min="5" max="50" value="15" />
+              <span class="value-display" id="sizeValue">15%</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Opacity</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="opacitySlider"
+                min="0"
+                max="100"
+                value="80"
+              />
+              <span class="value-display" id="opacityValue">80%</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button
+              class="btn btn-primary"
+              id="processBtn"
+              onclick="processVideo()"
+            >
+              ✨ Add Watermark & Download
+            </button>
+          </div>
+
+          <div class="features-info">
+            <p><strong>🎯 Enhanced Features:</strong></p>
+            <ul>
+              <li>✅ Preserves original video format (MP4, MOV, WebM, etc.)</li>
+              <li>✅ Maintains audio quality and sync</li>
+              <li>✅ Optimized file size with minimal quality loss</li>
+              <li>✅ Professional video processing with FFmpeg</li>
+              <li>🔄 Automatic fallback for maximum compatibility</li>
+            </ul>
+          </div>
+
+          <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="status" id="status"></div>
+        </div>
+      </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+      let videoFile = null;
+      let watermarkFile = null;
+      let watermarkImage = null;
+      let position = "bottom-right";
+      let size = 15;
+      let opacity = 80;
+      let ffmpeg = null;
+      let FFmpeg = null;
+      let FFmpegUtil = null;
+
+      // Dynamic library loading
+      async function loadFFmpegLibraries() {
+        try {
+          // Try compatible FFmpeg versions that work with 0.12.10 core
+          const sources = [
+            {
+              ffmpeg:
+                "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js",
+              util: "https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.js",
+            },
+            {
+              ffmpeg:
+                "https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js",
+              util: "https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/util.js",
+            },
+            {
+              ffmpeg:
+                "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js",
+              util: "https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.js",
+            },
+          ];
+
+          for (const source of sources) {
+            try {
+              console.log(`Trying to load FFmpeg from: ${source.ffmpeg}`);
+
+              // Load FFmpeg
+              await loadScript(source.ffmpeg);
+              if (
+                typeof window.FFmpegWASM !== "undefined" ||
+                typeof window.FFmpeg !== "undefined"
+              ) {
+                FFmpeg = window.FFmpegWASM || window.FFmpeg;
+              }
+
+              // Load FFmpegUtil
+              await loadScript(source.util);
+              if (typeof window.FFmpegUtil !== "undefined") {
+                FFmpegUtil = window.FFmpegUtil;
+              }
+
+              // Check if both loaded successfully
+              if (FFmpeg && FFmpegUtil) {
+                console.log("✅ FFmpeg libraries loaded successfully!");
+                return true;
+              }
+            } catch (e) {
+              console.warn(`Failed to load from ${source.ffmpeg}:`, e);
+              continue;
+            }
+          }
+
+          return false;
+        } catch (error) {
+          console.error("Failed to load FFmpeg libraries:", error);
+          return false;
+        }
+      }
+
+      // Helper function to load scripts dynamically
+      function loadScript(src) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+
+      const videoInput = document.getElementById("videoInput");
+      const watermarkInput = document.getElementById("watermarkInput");
+      const previewVideo = document.getElementById("previewVideo");
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const controls = document.getElementById("controls");
+      const sizeSlider = document.getElementById("sizeSlider");
+      const opacitySlider = document.getElementById("opacitySlider");
+      const sizeValue = document.getElementById("sizeValue");
+      const opacityValue = document.getElementById("opacityValue");
+      const status = document.getElementById("status");
+      const progressBar = document.getElementById("progressBar");
+      const progressFill = document.getElementById("progressFill");
+
+      // Wait for libraries to load
+      async function waitForLibraries() {
+        return new Promise(async (resolve, reject) => {
+          // First try to load libraries if they're not already loaded
+          if (!FFmpeg || !FFmpegUtil) {
+            const loaded = await loadFFmpegLibraries();
+            if (!loaded) {
+              reject(new Error("Failed to load FFmpeg libraries from any CDN"));
+              return;
+            }
+          }
+
+          const checkLibraries = () => {
+            if (FFmpeg && FFmpegUtil) {
+              resolve();
+            } else {
+              setTimeout(checkLibraries, 100);
+            }
+          };
+          checkLibraries();
+
+          // Timeout after 15 seconds
+          setTimeout(() => {
+            reject(
+              new Error("Libraries failed to initialize within 15 seconds")
+            );
+          }, 15000);
+        });
+      }
+
+      // Initialize FFmpeg
+      async function initFFmpeg() {
+        if (ffmpeg) return ffmpeg;
+
+        try {
+          // Wait for libraries to load first
+          await waitForLibraries();
+
+          const { FFmpeg: FFmpegClass } = FFmpeg;
+          const { fetchFile, toBlobURL } = FFmpegUtil;
+          ffmpeg = new FFmpegClass();
+
+          // Use the working version 0.12.10
+          let baseURL =
+            "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd";
+          let coreURL, wasmURL;
+
+          try {
+            coreURL = await toBlobURL(
+              `${baseURL}/ffmpeg-core.js`,
+              "text/javascript"
+            );
+            wasmURL = await toBlobURL(
+              "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd/ffmpeg-core.wasm",
+              "application/wasm"
+            );
+          } catch (e) {
+            // Fallback to unpkg CDN if jsdelivr fails
+            baseURL = "https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
+            coreURL = await toBlobURL(
+              `${baseURL}/ffmpeg-core.js`,
+              "text/javascript"
+            );
+            wasmURL = await toBlobURL(
+              `${baseURL}/ffmpeg-core.wasm`,
+              "application/wasm"
+            );
+          }
+
+          await ffmpeg.load({
+            coreURL,
+            wasmURL,
+          });
+
+          return ffmpeg;
+        } catch (error) {
+          console.error("Failed to initialize FFmpeg:", error);
+          throw new Error(
+            "Failed to initialize video processing engine. Please ensure your browser supports WebAssembly and try refreshing the page."
+          );
+        }
+      }
+
+      // Get file extension from filename
+      function getFileExtension(filename) {
+        return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+      }
+
+      // Get MIME type from file extension
+      function getMimeType(extension) {
+        const mimeTypes = {
+          mp4: "video/mp4",
+          webm: "video/webm",
+          mov: "video/mov",
+          avi: "video/avi",
+          mkv: "video/x-matroska",
+        };
+        return mimeTypes[extension.toLowerCase()] || "video/mp4";
+      }
+
+      videoInput.addEventListener("change", handleVideoUpload);
+      watermarkInput.addEventListener("change", handleWatermarkUpload);
+
+      // Add drag and drop functionality
+      const videoUploadBox = document.getElementById("videoUploadBox");
+      const watermarkUploadBox = document.getElementById("watermarkUploadBox");
+
+      // Video upload box drag and drop
+      videoUploadBox.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        videoUploadBox.style.borderColor = "#764ba2";
+        videoUploadBox.style.background = "#f0f2ff";
+      });
+
+      videoUploadBox.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        videoUploadBox.style.borderColor = "#667eea";
+        videoUploadBox.style.background = "#f8f9ff";
+      });
+
+      videoUploadBox.addEventListener("drop", (e) => {
+        e.preventDefault();
+        videoUploadBox.style.borderColor = "#667eea";
+        videoUploadBox.style.background = "#f8f9ff";
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          videoInput.files = files;
+          handleVideoUpload({ target: { files: files } });
+        }
+      });
+
+      // Watermark upload box drag and drop
+      watermarkUploadBox.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        watermarkUploadBox.style.borderColor = "#764ba2";
+        watermarkUploadBox.style.background = "#f0f2ff";
+      });
+
+      watermarkUploadBox.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        watermarkUploadBox.style.borderColor = "#667eea";
+        watermarkUploadBox.style.background = "#f8f9ff";
+      });
+
+      watermarkUploadBox.addEventListener("drop", (e) => {
+        e.preventDefault();
+        watermarkUploadBox.style.borderColor = "#667eea";
+        watermarkUploadBox.style.background = "#f8f9ff";
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          watermarkInput.files = files;
+          handleWatermarkUpload({ target: { files: files } });
+        }
+      });
+
+      function handleVideoUpload(e) {
+        videoFile = e.target.files[0];
+        if (videoFile) {
+          // Validate file size (limit to 500MB)
+          if (videoFile.size > 500 * 1024 * 1024) {
+            status.className = "status error";
+            status.textContent =
+              "❌ Video file too large. Please choose a file smaller than 500MB.";
+            return;
+          }
+
+          // Validate file type
+          const validTypes = [
+            "video/mp4",
+            "video/webm",
+            "video/mov",
+            "video/avi",
+            "video/quicktime",
+          ];
+          if (!validTypes.includes(videoFile.type)) {
+            status.className = "status error";
+            status.textContent =
+              "❌ Unsupported video format. Please use MP4, WebM, MOV, or AVI.";
+            return;
+          }
+
+          document.getElementById("videoUploadBox").classList.add("has-file");
+          document.getElementById("videoFileName").textContent = videoFile.name;
+          const url = URL.createObjectURL(videoFile);
+          previewVideo.src = url;
+          previewVideo.style.display = "block";
+          status.className = "status";
+          status.textContent = "";
+          checkBothUploaded();
+        }
+      }
+
+      function handleWatermarkUpload(e) {
+        watermarkFile = e.target.files[0];
+        if (watermarkFile) {
+          // Validate file size (limit to 10MB for watermark)
+          if (watermarkFile.size > 10 * 1024 * 1024) {
+            status.className = "status error";
+            status.textContent =
+              "❌ Watermark file too large. Please choose an image smaller than 10MB.";
+            return;
+          }
+
+          // Validate file type
+          const validTypes = [
+            "image/png",
+            "image/jpeg",
+            "image/jpg",
+            "image/svg+xml",
+          ];
+          if (!validTypes.includes(watermarkFile.type)) {
+            status.className = "status error";
+            status.textContent =
+              "❌ Unsupported image format. Please use PNG, JPG, or SVG.";
+            return;
+          }
+
+          document
+            .getElementById("watermarkUploadBox")
+            .classList.add("has-file");
+          document.getElementById("watermarkFileName").textContent =
+            watermarkFile.name;
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            watermarkImage = new Image();
+            watermarkImage.onload = function () {
+              status.className = "status";
+              status.textContent = "";
+              checkBothUploaded();
+            };
+            watermarkImage.onerror = function () {
+              status.className = "status error";
+              status.textContent =
+                "❌ Failed to load watermark image. Please try another file.";
+            };
+            watermarkImage.src = event.target.result;
+          };
+          reader.readAsDataURL(watermarkFile);
+        }
+      }
+
+      function checkBothUploaded() {
+        if (videoFile && watermarkImage) {
+          controls.style.display = "block";
+
+          // Check if libraries are available
+          checkLibraryStatus();
+        }
+      }
+
+      async function checkLibraryStatus() {
+        const processBtn = document.getElementById("processBtn");
+        const statusElement = document.getElementById("status");
+
+        if (!FFmpeg || !FFmpegUtil) {
+          processBtn.innerHTML = "⚠️ Loading Libraries... Please Wait";
+          processBtn.disabled = true;
+          statusElement.className = "status processing";
+          statusElement.textContent = "Loading video processing libraries...";
+
+          // Try to load libraries
+          try {
+            await loadFFmpegLibraries();
+          } catch (e) {
+            console.warn("Failed to load libraries:", e);
+          }
+
+          // Check every second if libraries are loaded
+          const checkInterval = setInterval(() => {
+            if (FFmpeg && FFmpegUtil) {
+              processBtn.innerHTML = "✨ Add Watermark & Download";
+              processBtn.disabled = false;
+              statusElement.className = "status";
+              statusElement.textContent =
+                "Ready to process! Advanced FFmpeg processing available.";
+              clearInterval(checkInterval);
+            }
+          }, 1000);
+
+          // Timeout after 15 seconds and enable fallback
+          setTimeout(() => {
+            if (!FFmpeg || !FFmpegUtil) {
+              processBtn.innerHTML =
+                "✨ Add Watermark & Download (Fallback Mode)";
+              processBtn.disabled = false;
+              statusElement.className = "status";
+              statusElement.textContent =
+                "Ready to process! Using fallback method (may not preserve audio).";
+              clearInterval(checkInterval);
+            }
+          }, 15000);
+        } else {
+          processBtn.innerHTML = "✨ Add Watermark & Download";
+          processBtn.disabled = false;
+          statusElement.className = "status";
+          statusElement.textContent =
+            "Ready to process! Advanced FFmpeg processing available.";
+        }
+      }
+
+      document.querySelectorAll(".position-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll(".position-btn")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          position = this.dataset.position;
+        });
+      });
+
+      sizeSlider.addEventListener("input", function () {
+        size = this.value;
+        sizeValue.textContent = size + "%";
+      });
+
+      opacitySlider.addEventListener("input", function () {
+        opacity = this.value;
+        opacityValue.textContent = opacity + "%";
+      });
+
+      async function processVideo() {
+        const processBtn = document.getElementById("processBtn");
+        processBtn.disabled = true;
+        status.className = "status processing";
+        status.textContent = "Initializing video processor...";
+        progressBar.style.display = "block";
+        progressFill.style.width = "0%";
+
+        try {
+          // Initialize FFmpeg
+          status.textContent = "Loading video processing engine...";
+          await initFFmpeg();
+
+          const { fetchFile } = FFmpegUtil;
+
+          // Get original file extension and details
+          const originalExtension = getFileExtension(videoFile.name);
+          const outputExtension = originalExtension || "mp4";
+
+          status.textContent = "Preparing files for processing...";
+          progressFill.style.width = "10%";
+
+          // Write input video file
+          await ffmpeg.writeFile(
+            "input." + originalExtension,
+            await fetchFile(videoFile)
+          );
+
+          // Write watermark image
+          const watermarkExtension = getFileExtension(watermarkFile.name);
+          await ffmpeg.writeFile(
+            "watermark." + watermarkExtension,
+            await fetchFile(watermarkFile)
+          );
+
+          status.textContent = "Processing video with watermark...";
+          progressFill.style.width = "20%";
+
+          // Debug: Log input file info
+          console.log("Processing video:", videoFile.name);
+          console.log("Watermark:", watermarkFile.name);
+          console.log(
+            "Position:",
+            position,
+            "Size:",
+            size + "%",
+            "Opacity:",
+            opacity + "%"
+          );
+
+          // Calculate watermark position based on selection
+          let overlayFilter = "";
+          const padding = 20;
+
+          switch (position) {
+            case "top-left":
+              overlayFilter = `overlay=${padding}:${padding}`;
+              break;
+            case "top-center":
+              overlayFilter = `overlay=(main_w-overlay_w)/2:${padding}`;
+              break;
+            case "top-right":
+              overlayFilter = `overlay=main_w-overlay_w-${padding}:${padding}`;
+              break;
+            case "center-left":
+              overlayFilter = `overlay=${padding}:(main_h-overlay_h)/2`;
+              break;
+            case "center":
+              overlayFilter = `overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2`;
+              break;
+            case "center-right":
+              overlayFilter = `overlay=main_w-overlay_w-${padding}:(main_h-overlay_h)/2`;
+              break;
+            case "bottom-left":
+              overlayFilter = `overlay=${padding}:main_h-overlay_h-${padding}`;
+              break;
+            case "bottom-center":
+              overlayFilter = `overlay=(main_w-overlay_w)/2:main_h-overlay_h-${padding}`;
+              break;
+            case "bottom-right":
+            default:
+              overlayFilter = `overlay=main_w-overlay_w-${padding}:main_h-overlay_h-${padding}`;
+          }
+
+          // Build FFmpeg command to properly burn watermark into video with audio preservation
+          let ffmpegArgs = [
+            "-i",
+            `input.${originalExtension}`,
+            "-i",
+            `watermark.${watermarkExtension}`,
+            "-filter_complex",
+            `[1:v]scale=iw*${size / 100}:ih*${
+              size / 100
+            }:force_original_aspect_ratio=decrease[wm];[wm]format=rgba,colorchannelmixer=aa=${
+              opacity / 100
+            }[wmop];[0:v][wmop]${overlayFilter}:shortest=1[outv]`,
+            "-map",
+            "[outv]",
+            "-map",
+            "0:a?", // Map audio if present
+            "-c:v",
+            "libx264",
+            "-crf",
+            "23",
+            "-preset",
+            "medium",
+            "-c:a",
+            "aac", // Use AAC encoding for better compatibility
+            "-b:a",
+            "128k", // Set audio bitrate
+            "-movflags",
+            "+faststart",
+            "-shortest", // End output when shortest input ends
+            `output.${outputExtension}`,
+          ];
+
+          // Debug: Log FFmpeg command
+          console.log("FFmpeg command:", ffmpegArgs.join(" "));
+
+          // Set up progress monitoring
+          ffmpeg.on("progress", ({ progress }) => {
+            const progressPercent = Math.round(progress * 100);
+            progressFill.style.width =
+              Math.min(20 + progressPercent * 0.7, 90) + "%";
+            status.textContent = `Processing video... ${progressPercent}%`;
+          });
+
+          // Execute FFmpeg command with enhanced error handling
+          try {
+            await ffmpeg.exec(ffmpegArgs);
+          } catch (firstError) {
+            console.warn("First attempt failed:", firstError);
+
+            // Try with audio copy instead of AAC encoding
+            status.textContent = "Retrying with audio copy mode...";
+            const copyAudioArgs = [...ffmpegArgs];
+            const audioCodecIndex = copyAudioArgs.indexOf("-c:a");
+            if (audioCodecIndex !== -1) {
+              copyAudioArgs[audioCodecIndex + 1] = "copy";
+              // Remove bitrate setting when copying
+              const bitrateIndex = copyAudioArgs.indexOf("-b:a");
+              if (bitrateIndex !== -1) {
+                copyAudioArgs.splice(bitrateIndex, 2);
+              }
+            }
+
+            try {
+              await ffmpeg.exec(copyAudioArgs);
+            } catch (secondError) {
+              console.warn("Second attempt failed:", secondError);
+
+              // Final fallback: video only
+              status.textContent = "Creating video-only output...";
+              const videoOnlyArgs = ffmpegArgs.filter(
+                (arg) =>
+                  !arg.includes("0:a") &&
+                  arg !== "-c:a" &&
+                  arg !== "aac" &&
+                  arg !== "-b:a" &&
+                  arg !== "128k"
+              );
+
+              await ffmpeg.exec(videoOnlyArgs);
+
+              status.textContent =
+                "Video processed (audio could not be preserved)...";
+            }
+          }
+
+          status.textContent = "Finalizing output...";
+          progressFill.style.width = "95%";
+
+          // Read the output file
+          const outputData = await ffmpeg.readFile(`output.${outputExtension}`);
+
+          // Create download
+          const outputBlob = new Blob([outputData.buffer], {
+            type: getMimeType(outputExtension),
+          });
+
+          const url = URL.createObjectURL(outputBlob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `watermarked_${videoFile.name}`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          // Cleanup
+          await ffmpeg.deleteFile(`input.${originalExtension}`);
+          await ffmpeg.deleteFile(`watermark.${watermarkExtension}`);
+          await ffmpeg.deleteFile(`output.${outputExtension}`);
+
+          status.className = "status success";
+          status.textContent =
+            "✅ Video processed successfully! Download started.";
+          progressFill.style.width = "100%";
+
+          setTimeout(() => {
+            progressBar.style.display = "none";
+          }, 2000);
+
+          processBtn.disabled = false;
+        } catch (error) {
+          console.error("FFmpeg processing failed:", error);
+
+          // Try fallback canvas method
+          try {
+            status.textContent = "Trying alternative processing method...";
+            progressFill.style.width = "10%";
+
+            await processVideoCanvas();
+          } catch (fallbackError) {
+            status.className = "status error";
+            status.textContent = "❌ Error: " + fallbackError.message;
+            console.error("Fallback processing error:", fallbackError);
+            processBtn.disabled = false;
+            progressBar.style.display = "none";
+          }
+
+          // Cleanup on error
+          try {
+            if (ffmpeg) {
+              const files = [
+                "input." + getFileExtension(videoFile.name),
+                "watermark." + getFileExtension(watermarkFile.name),
+                "output." + getFileExtension(videoFile.name),
+              ];
+              for (const file of files) {
+                try {
+                  await ffmpeg.deleteFile(file);
+                } catch (e) {
+                  // File might not exist, ignore
+                }
+              }
+            }
+          } catch (cleanupError) {
+            console.warn("Cleanup error:", cleanupError);
+          }
+        }
+      }
+
+      // Fallback canvas processing method (no audio but works in all browsers)
+      async function processVideoCanvas() {
+        const processBtn = document.getElementById("processBtn");
+
+        status.textContent =
+          "Using fallback processing (audio will be preserved separately)...";
+
+        const video = document.createElement("video");
+        video.src = URL.createObjectURL(videoFile);
+        video.muted = true;
+
+        await new Promise((resolve) => {
+          video.onloadedmetadata = resolve;
+        });
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Try to preserve audio using a different approach
+        const audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)();
+        let audioBuffer = null;
+
+        try {
+          // Extract audio from original file
+          const arrayBuffer = await videoFile.arrayBuffer();
+          audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        } catch (e) {
+          console.warn("Could not extract audio:", e);
+        }
+
+        const stream = canvas.captureStream(30);
+
+        // Get original extension for better compatibility
+        const originalExt = getFileExtension(videoFile.name).toLowerCase();
+        let mimeType = "video/webm;codecs=vp9";
+
+        if (originalExt === "mp4") {
+          // Try MP4 if supported
+          if (MediaRecorder.isTypeSupported("video/mp4")) {
+            mimeType = "video/mp4";
+          }
+        }
+
+        const mediaRecorder = new MediaRecorder(stream, {
+          mimeType: mimeType,
+          videoBitsPerSecond: 2000000, // Reduced bitrate for smaller files
+        });
+
+        const chunks = [];
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) {
+            chunks.push(e.data);
+          }
+        };
+
+        mediaRecorder.onstop = async () => {
+          const blob = new Blob(chunks, { type: mimeType });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+
+          // Keep original extension if possible
+          let downloadName;
+          if (mimeType.includes("mp4") && originalExt === "mp4") {
+            downloadName = "watermarked_" + videoFile.name;
+          } else {
+            downloadName =
+              "watermarked_" +
+              videoFile.name.replace(/\.[^/.]+$/, "") +
+              ".webm";
+          }
+
+          a.download = downloadName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+
+          status.className = "status success";
+          status.textContent =
+            "✅ Video processed successfully! (Note: Using fallback method)";
+          progressBar.style.display = "none";
+          processBtn.disabled = false;
+        };
+
+        status.textContent = "Recording video with watermark...";
+        mediaRecorder.start();
+        video.play();
+
+        const drawFrame = () => {
+          if (video.paused || video.ended) {
+            mediaRecorder.stop();
+            return;
+          }
+
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          const watermarkWidth = (canvas.width * size) / 100;
+          const watermarkHeight =
+            (watermarkImage.height * watermarkWidth) / watermarkImage.width;
+          const padding = 20;
+
+          let x, y;
+          switch (position) {
+            case "top-left":
+              x = padding;
+              y = padding;
+              break;
+            case "top-center":
+              x = (canvas.width - watermarkWidth) / 2;
+              y = padding;
+              break;
+            case "top-right":
+              x = canvas.width - watermarkWidth - padding;
+              y = padding;
+              break;
+            case "center-left":
+              x = padding;
+              y = (canvas.height - watermarkHeight) / 2;
+              break;
+            case "center":
+              x = (canvas.width - watermarkWidth) / 2;
+              y = (canvas.height - watermarkHeight) / 2;
+              break;
+            case "center-right":
+              x = canvas.width - watermarkWidth - padding;
+              y = (canvas.height - watermarkHeight) / 2;
+              break;
+            case "bottom-left":
+              x = padding;
+              y = canvas.height - watermarkHeight - padding;
+              break;
+            case "bottom-center":
+              x = (canvas.width - watermarkWidth) / 2;
+              y = canvas.height - watermarkHeight - padding;
+              break;
+            case "bottom-right":
+            default:
+              x = canvas.width - watermarkWidth - padding;
+              y = canvas.height - watermarkHeight - padding;
+          }
+
+          ctx.globalAlpha = opacity / 100;
+          ctx.drawImage(watermarkImage, x, y, watermarkWidth, watermarkHeight);
+          ctx.globalAlpha = 1.0;
+
+          const progress = (video.currentTime / video.duration) * 100;
+          progressFill.style.width = Math.min(20 + progress * 0.7, 90) + "%";
+
+          requestAnimationFrame(drawFrame);
+        };
+
+        drawFrame();
+      }
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check WebAssembly support
+        if (typeof WebAssembly === "undefined") {
+          const status = document.getElementById("status");
+          status.className = "status error";
+          status.textContent =
+            "❌ Your browser does not support WebAssembly. Please use a modern browser like Chrome, Firefox, or Edge.";
+        }
+
+        console.log("🎬 Watermark Tool loaded successfully!");
+
+        // Start loading libraries immediately
+        loadFFmpegLibraries()
+          .then((success) => {
+            console.log("📚 FFmpeg available:", !!FFmpeg);
+            console.log("🛠️ FFmpegUtil available:", !!FFmpegUtil);
+            console.log(
+              "🌐 WebAssembly supported:",
+              typeof WebAssembly !== "undefined"
+            );
+            console.log("🚀 Libraries loaded successfully:", success);
+          })
+          .catch((error) => {
+            console.warn("⚠️ Failed to load libraries:", error);
+            console.log("📚 FFmpeg available:", !!FFmpeg);
+            console.log("🛠️ FFmpegUtil available:", !!FFmpegUtil);
+            console.log(
+              "🌐 WebAssembly supported:",
+              typeof WebAssembly !== "undefined"
+            );
+          });
+      });
+    </script>
+  </body>
+</html>

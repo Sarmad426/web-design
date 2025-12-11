@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Media Post Card</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f4f4;
+      }
+
+      .card {
+        width: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: #fff;
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: scale(1.03);
+      }
+
+      .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 15px;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+
+      .card-description {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 15px 15px;
+      }
+
+      .btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        background-color: #e0e0e0;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background-color: #d6d6d6;
+      }
+
+      .btn:active {
+        transform: scale(0.95);
+      }
+
+      .btn i {
+        font-size: 1.1rem;
+      }
+
+      .btn.like.liked {
+        background-color: #ff6b6b;
+        color: white;
+      }
+
+      .btn.dislike.disliked {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .btn.comment {
+        background-color: #f9c74f;
+        color: white;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        gap: 45px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img
+        src="https://th.bing.com/th/id/OIP.vS0hnvg05rmzzKcjoMAafAHaE8?rs=1&pid=ImgDetMain"
+        alt="Post Image"
+      />
+      <div class="card-content">
+        <h2 class="card-title">Beautiful Scenery</h2>
+        <p class="card-description">
+          This is an amazing view from a scenic location. Nature at its best!
+        </p>
+      </div>
+      <div class="card-actions">
+        <button class="btn like" id="likeBtn"><i>👍</i> Like</button>
+        <button class="btn dislike" id="dislikeBtn"><i>👎</i> Dislike</button>
+        <button class="btn comment"><i>💬</i> Comment</button>
+      </div>
+    </div>
+
+    <script>
+      const likeBtn = document.getElementById("likeBtn");
+      const dislikeBtn = document.getElementById("dislikeBtn");
+
+      likeBtn.addEventListener("click", () => {
+        if (!likeBtn.classList.contains("liked")) {
+          likeBtn.classList.add("liked");
+          dislikeBtn.classList.remove("disliked");
+        } else {
+          likeBtn.classList.remove("liked");
+        }
+      });
+
+      dislikeBtn.addEventListener("click", () => {
+        if (!dislikeBtn.classList.contains("disliked")) {
+          dislikeBtn.classList.add("disliked");
+          likeBtn.classList.remove("liked");
+        } else {
+          dislikeBtn.classList.remove("disliked");
+        }
+      });
+    </script>
+  </body>
+</html>
